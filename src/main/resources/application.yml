@@ -1,24 +1,46 @@
 spring:
   application:
-    name: demo-openforeign
-  datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: 12562903
-    driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 20
-      minimum-idle: 5
-      idle-timeout: 30000
-      max-lifetime: 1200000
-      auto-commit: true
-      pool-name: HikariPool-CP
+    name: demo-openfeign
 
-  jpa:
-    hibernate:
-      ddl-auto: update
-      show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+feign:
+  circuitbreaker:
+    enabled: true   # enable Feign + CircuitBreaker integration
+
+resilience4j.circuitbreaker:
+  instances:
+    product-service:   # matches Feign client "name"
+      failureRateThreshold: 50          # % failures before opening CB
+      minimumNumberOfCalls: 5           # calls before CB starts calculating
+      waitDurationInOpenState: 30s      # how long CB stays open
+      slidingWindowSize: 10             # size of the window for metrics
+
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/postgres
+#    username: postgres
+#    password: 12562903
+#    driver-class-name: org.postgresql.Driver
+#    hikari:
+#      maximum-pool-size: 20
+#      minimum-idle: 5
+#      idle-timeout: 30000
+#      max-lifetime: 1200000
+#      auto-commit: true
+#      pool-name: HikariPool-CP
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#      show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#springdoc:
+#  swagger-ui:
+#    display-request-duration: true
+#    show-request-duration: true
+#  openapi:
+#    customization:
+#      enable-html: true
