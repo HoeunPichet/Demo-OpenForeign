@@ -7,6 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 //@EnableHystrix // enable Hystrix globally
+//@EnableCircuitBreaker   // Not strictly needed in Spring Boot 3.x, but OK
 public class DemoOpenfeignApplication {
 
 //	@Bean

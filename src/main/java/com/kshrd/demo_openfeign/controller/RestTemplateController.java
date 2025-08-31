@@ -1,17 +1,16 @@
 package com.kshrd.demo_openfeign.controller;
 
+import com.kshrd.demo_openfeign.model.request.ProductRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Map;
 
 @RestController
@@ -31,6 +30,20 @@ public class RestTemplateController {
         String url = "https://dummyjson.com/products?limit=5&skip=10&select=title,price";
         // Synchronous call → waits for response
         return restTemplate.getForObject(url, Map.class);
+    }
+
+    @PostMapping("/products")
+    public Map createProduct(ProductRequest product) {
+        String url = "https://dummyjson.com/products/add";
+        // Synchronous call → waits for response
+        return restTemplate.postForObject(url, product, Map.class);
+    }
+
+    @PostMapping("/products/location")
+    public URI createProductLocation(ProductRequest product) {
+        String url = "https://dummyjson.com/products/add";
+        // Synchronous call → waits for response
+        return restTemplate.postForLocation(url, product);
     }
 
     @GetMapping("/products/exchange")

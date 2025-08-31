@@ -14,6 +14,13 @@ resilience4j.circuitbreaker:
       waitDurationInOpenState: 30s      # how long CB stays open
       slidingWindowSize: 10             # size of the window for metrics
 
+#    productService:
+#      failureRateThreshold: 50
+#      minimumNumberOfCalls: 5
+#      waitDurationInOpenState: 30s
+#      slidingWindowSize: 10
+#      permittedNumberOfCallsInHalfOpenState: 3
+
 
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/postgres
