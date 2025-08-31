@@ -6,7 +6,14 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
+//@EnableHystrix // enable Hystrix globally
 public class DemoOpenfeignApplication {
+
+//	@Bean
+//	public WebClient.Builder webClientBuilder() {
+//		return WebClient.builder();
+//	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoOpenfeignApplication.class, args);

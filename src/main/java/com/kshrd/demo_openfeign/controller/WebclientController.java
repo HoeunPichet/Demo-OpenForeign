@@ -1,7 +1,10 @@
 package com.kshrd.demo_openfeign.controller;
 
+import com.kshrd.demo_openfeign.exception.NotFoundException;
 import com.kshrd.demo_openfeign.model.request.ProductRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
@@ -30,6 +33,9 @@ public class WebclientController {
         return webClient.get()
                 .uri("/products/{id}", id)
                 .retrieve()
+                .onStatus(HttpStatusCode::isError, response ->
+                        Mono.error(new NotFoundException("A Product not found with ID: " + id))
+                )
                 .bodyToMono(Object.class); // Mono = async single value
 //                .block();   // blocks the thread until response
     }
