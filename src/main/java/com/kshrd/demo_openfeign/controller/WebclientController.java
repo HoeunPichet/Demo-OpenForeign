@@ -42,6 +42,19 @@ public class WebclientController {
                 .bodyToFlux(Map.class);
     }
 
+    @GetMapping("/flux/subscribe")
+    public Flux<Map> getDataFluxSubscribe() {
+        Flux<Map> response = webClient.get()
+                .uri("/products?limit=5&skip=10&select=title,price")
+                .retrieve()
+                .bodyToFlux(Map.class);
+        response.subscribe(product -> {
+            System.out.println("Got product: " + product);
+        });
+
+        return response;
+    }
+
     @PostMapping
     public Mono<ProductRequest> addProduct(ProductRequest product) {
         return webClient.post()
